@@ -4,7 +4,6 @@ import TableBody from './tableBody'
 
 const Table = (props) => {
     const { columns, sortColumn, onSort, data } = props;
-    console.log("columns in Table itself", columns)
     return (
         <table className="table">
             <TableHeader

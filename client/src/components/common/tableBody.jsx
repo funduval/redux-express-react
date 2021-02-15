@@ -15,7 +15,7 @@ class TableBody extends Component {
         return (
             <tbody>
                 {data.map((item) => (
-                    <tr key={item._id}>
+                    <tr key={item._id} className={item === data[0] ? "first-order" : ""}>
                         {columns.map(column => <td key={item._id + (column.path || column.key)}>{this.renderCell(item, column)}</td>)}
                     </tr>
                 ))}

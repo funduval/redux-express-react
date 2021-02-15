@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
-import MoviesTable from "./moviesTable";
-import Pagination from "./common/pagination";
+import ChatHistory from "./chatHistory";
+import Form from "./common/form"
+import Display from "./common/display"
+
+// import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import { paginate } from "../utils/paginate";
 import _ from 'lodash';
+import NavBar from "./common/navbar";
 
 
-class Movies extends Component {
+class Chats extends Component {
   state = {
     movies: [],
     currentPage: 1,
@@ -49,7 +53,6 @@ class Movies extends Component {
   };
 
   handlePageChange = (page) => {
-    console.log("page", page);
     this.setState({
       currentPage: page,
     });
@@ -74,32 +77,52 @@ class Movies extends Component {
 
 
     return (
-      <div className="row">
-        <div className="col-xs-2 m-4">
-          <ListGroup
-            items={this.state.genres}
-            selectedItem={this.state.selectedGenre}
-            onItemSelect={this.handleGenreSelect}
-          />
-        </div>
-        <div className="col m-4">
-          <h2>There are {totalCount} movies in the database.</h2>
-          <MoviesTable
-            movies={movies}
-            onDelete={this.handleDelete}
-            onSort={this.handleSort}
-            sortColumn={sortColumn}
-          />
+      <React.Fragment>
+        <NavBar />
+        <div className="row">
+          <div className="col-md-5 m-4">
+            <ChatHistory
+              movies={movies}
+              onDelete={this.handleDelete}
+              onSort={this.handleSort}
+              sortColumn={sortColumn}
+            />
+            {/* <ListGroup
+              items={this.state.genres}
+              selectedItem={this.state.selectedGenre}
+              onItemSelect={this.handleGenreSelect}
+            /> */}
+          </div>
+          <div className="col m-4">
+
+            <div className="row">
+              <div className="col m-4">
+                {/*          
           <Pagination
             itemsCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
-          />
-        </div >
-      </div>
+          /> */}
+                <Display
+                  itemsCount={totalCount}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
+                <Form
+                  itemsCount={totalCount}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
+              </div>
+            </div >
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
 
-export default Movies;
+export default Chats;

@@ -24,7 +24,6 @@ class TableHeader extends Component {
     }
 
     render() {
-        console.log(this.props.columns)
         return (
             <thead className="clickable">
                 <tr>

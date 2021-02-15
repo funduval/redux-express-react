@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Movies from "./components/movies";
+import Chats from "./components/chats";
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 const likesReducer = function (state = 0, action) {
@@ -20,7 +20,7 @@ const mapStateToProps = state => {
     likes: state
   };
 };
-const PollingComponent = ({ likes }) => <Movies likes={likes} />
+const PollingComponent = ({ likes }) => <Chats likes={likes} />
 
 const Container = connect(mapStateToProps)(PollingComponent);
 class App extends Component {
