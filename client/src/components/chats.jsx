@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import { getChats } from "../services/fakeChatService";
+
+import NavBar from "./common/navbar";
+
 import ChatHistory from "./chatHistory";
 import Form from "./common/form"
 import Display from "./common/display"
 
 // import Pagination from "./common/pagination";
-import ListGroup from "./common/listGroup";
+
 import { paginate } from "../utils/paginate";
 import _ from 'lodash';
-import NavBar from "./common/navbar";
 
 
 class Chats extends Component {
@@ -23,26 +24,22 @@ class Chats extends Component {
 
   componentDidMount() {
 
-    const genres = [{ _id: " ", name: "All Genres" }, ...getGenres()];
 
     this.setState({
-      movies: getMovies(),
-      genres
+      movies: getChats()
 
     })
   }
 
   getPageData = () => {
-    const { pageSize, currentPage, selectedGenre, movies: allMovies, sortColumn } = this.state;
+    const { pageSize, currentPage,  movies: allMovies, sortColumn } = this.state;
 
 
-    const filtered = selectedGenre && selectedGenre._id !== " " ? allMovies.filter(movie => movie.genre._id === selectedGenre._id) : allMovies
-
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+    const sorted = _.orderBy(allMovies, [sortColumn.path], [sortColumn.order])
 
     const movies = paginate(sorted, currentPage, pageSize);
 
-    return { totalCount: filtered.length, data: movies }
+    return { totalCount: sorted.length, data: movies }
   }
 
   handleDelete = (id) => {
@@ -56,13 +53,6 @@ class Chats extends Component {
     this.setState({
       currentPage: page,
     });
-  };
-
-  handleGenreSelect = (genre) => {
-    this.setState({
-      selectedGenre: genre,
-      currentPage: 1
-    })
   };
 
   handleSort = (sortColumn) => {
@@ -87,29 +77,12 @@ class Chats extends Component {
               onSort={this.handleSort}
               sortColumn={sortColumn}
             />
-            {/* <ListGroup
-              items={this.state.genres}
-              selectedItem={this.state.selectedGenre}
-              onItemSelect={this.handleGenreSelect}
-            /> */}
+  
           </div>
           <div className="col m-4">
 
             <div className="row">
-              <div className="col m-4">
-                {/*          
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          /> */}
-                <Display
-                  itemsCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={this.handlePageChange}
-                />
+              <div className="col m-4">        
                 <Form
                   itemsCount={totalCount}
                   pageSize={pageSize}
